@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{方案标题}}</title>
+  <style>
+    :root { color-scheme: light; --ink:#17212f; --muted:#536273; --line:#dce3ea; --accent:#1768ac; --soft:#f3f7fb; --paper:#fff; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+    a { color:var(--accent); text-underline-offset:3px; }
+    .layout { display:grid; grid-template-columns:minmax(190px,230px) minmax(0,800px); gap:clamp(24px,5vw,72px); max-width:1190px; margin:auto; padding:40px 28px 96px; }
+    nav { align-self:start; position:sticky; top:28px; max-height:calc(100vh - 56px); overflow:auto; font-size:.9rem; }
+    nav strong { display:block; margin-bottom:12px; }
+    nav a { display:block; padding:5px 0; color:var(--muted); text-decoration:none; }
+    nav a:hover, nav a:focus { color:var(--accent); text-decoration:underline; }
+    main { min-width:0; }
+    header { padding-bottom:24px; border-bottom:1px solid var(--line); }
+    h1,h2,h3 { line-height:1.3; letter-spacing:-.02em; scroll-margin-top:24px; }
+    h1 { font-size:clamp(2rem,4vw,2.8rem); margin:0 0 14px; }
+    h2 { font-size:1.55rem; margin:54px 0 16px; padding-bottom:9px; border-bottom:1px solid var(--line); }
+    h3 { font-size:1.15rem; margin:30px 0 10px; }
+    p,ul,ol { margin:0 0 16px; }
+    li { margin:4px 0; }
+    .lede { color:var(--muted); font-size:1.08rem; }
+    .meta { display:flex; flex-wrap:wrap; gap:8px 20px; color:var(--muted); font-size:.9rem; margin-top:20px; }
+    .summary { margin-top:28px; padding:20px 24px; background:var(--soft); border-left:4px solid var(--accent); }
+    .summary h2 { font-size:1.05rem; margin:0 0 8px; padding:0; border:0; }
+    .summary p:last-child { margin-bottom:0; }
+    .callout { padding:15px 18px; border-left:3px solid var(--accent); background:var(--soft); margin:22px 0; }
+    .table-wrap { overflow-x:auto; margin:20px 0; }
+    table { width:100%; border-collapse:collapse; min-width:520px; font-size:.94rem; }
+    th,td { padding:11px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:var(--soft); font-weight:650; }
+    figure { margin:24px 0; }
+    figure svg { display:block; width:100%; height:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    figcaption { color:var(--muted); font-size:.9rem; margin-top:9px; }
+    pre { overflow-x:auto; padding:16px; border-radius:8px; background:#17212f; color:#f5f8fc; font-size:.88rem; line-height:1.55; }
+    code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; }
+    :not(pre)>code { overflow-wrap:anywhere; padding:.08em .3em; background:var(--soft); border-radius:3px; }
+    @media (max-width:800px) { .layout { display:block; padding:20px 18px 72px; } nav { position:static; max-height:none; border-bottom:1px solid var(--line); padding-bottom:12px; margin-bottom:28px; } nav a { display:inline-block; margin-right:14px; } h2 { margin-top:42px; } }
+    @media print { body { font-size:11pt; } .layout { display:block; max-width:none; padding:0; } nav { display:none; } a { color:inherit; } h2,h3,figure,.callout { break-inside:avoid; } table { min-width:0; } pre { white-space:pre-wrap; } }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <nav aria-label="文档目录">
+      <strong>目录</strong>
+      <a href="#context">背景与目标</a>
+      <a href="#decision">方案与取舍</a>
+      <a href="#design">详细设计</a>
+      <a href="#delivery">实施与验证</a>
+      <a href="#risks">风险与待确认</a>
+    </nav>
+    <main>
+      <article>
+        <header>
+          <h1>{{方案标题}}</h1>
+          <p class="lede">{{一句话说明方案解决的问题和适用范围}}</p>
+          <div class="meta"><span>状态：{{草案或待评审}}</span><span>更新：{{日期}}</span><span>面向：{{评审读者}}</span></div>
+        </header>
+        <section class="summary" aria-labelledby="summary-title">
+          <h2 id="summary-title">方案摘要</h2>
+          <p>{{推荐方案、核心理由、主要代价或限制。}}</p>
+        </section>
+        <section id="context">
+          <h2>背景与目标</h2>
+          <p>{{现状、问题及证据。}}</p>
+          <h3>目标与约束</h3>
+          <ul><li>{{可验证目标与测量方式。}}</li><li>{{范围、依赖或硬性约束。}}</li></ul>
+        </section>
+        <section id="decision">
+          <h2>方案与取舍</h2>
+          <p>{{方案选择和推荐理由。没有实质性备选方案时，可改成“设计原则”或删除比较表。}}</p>
+          <div class="table-wrap"><table><thead><tr><th scope="col">方案</th><th scope="col">优势</th><th scope="col">代价与风险</th><th scope="col">结论</th></tr></thead><tbody><tr><td>{{选项 A}}</td><td>{{有证据的优势}}</td><td>{{限制}}</td><td>{{采用或不采用的理由}}</td></tr></tbody></table></div>
+        </section>
+        <section id="design">
+          <h2>详细设计</h2>
+          <p>{{先说明系统边界和核心组件，再解释数据、调用路径与异常。需要图时可插入带文字说明的内联 SVG。}}</p>
+          <h3>关键流程</h3>
+          <ol><li>{{触发条件与入口。}}</li><li>{{核心处理、数据变化和失败处理。}}</li><li>{{完成条件与可观测信号。}}</li></ol>
+        </section>
+        <section id="delivery">
+          <h2>实施与验证</h2>
+          <p>{{分阶段落地、兼容策略、监控、验证标准和回退条件。}}</p>
+        </section>
+        <section id="risks">
+          <h2>风险与待确认</h2>
+          <ul><li>{{风险、影响和缓解措施。}}</li><li>{{会影响最终决策的待确认问题及负责人或获取方式。}}</li></ul>
+        </section>
+      </article>
+    </main>
+  </div>
+</body>
+</html>
