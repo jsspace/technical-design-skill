@@ -1,34 +1,47 @@
-# 技术方案写作原则
+# Editorial decisions for a frontend design
 
-以下原则提炼自用户提供的《如何写好技术文档》。原文主要讨论通用技术写作；在技术方案中，以支持评审决策为目标使用这些原则。
+This reference adapts the user's source document on technical writing to a visual-first frontend design. It is a decision aid, not a fixed outline.
 
-## 从提纲到论证
+## Find the point before choosing a diagram
 
-- **总—分—总**：开头交代问题、推荐方案与预期影响；正文逐层解释设计；结尾收束结论和下一步。总结不是必填章节，避免重复摘要。
-- **先宏观后微观**：先展示系统边界和主要组件，再讨论接口、数据结构、异常处理。需要时先画简要脑图来发现主题，再把分类和依赖关系映射到目录。
-- **为段落选择逻辑关系**：迁移或发布过程用时间顺序；性能问题用因果；现状痛点用问题—解决；技术选型用对比；架构说明用层次递进；多类需求或模块用分类、并列。不同章节可采用不同关系，不必全篇统一。
-- **图文配合**：模块说明可用“简述 → 图示 → 关键解释”的顺序。图表达关系，文字说明图中省略的条件和决策原因。长代码只在证明关键机制时出现；其余给出接口、伪代码或链接。
+For each candidate subsection, finish: “After reading this, the engineer will understand ___.” If the answer is only “the workflow,” “the components,” or “the code,” make it more specific. Name the rule, boundary, or choice in a short heading (for example, “2. Fallback states”); place the complete conclusion in the first sentence below it.
 
-## 让读者容易判断
+Start with the most consequential relationship. Then move from that relationship to its conditions, frontend state, component responsibilities, and evidence as needed. A feature may need a decision tree and one code snippet; another may need only a component boundary and API contract. Omit any format that does not improve comprehension.
 
-- 标题应表达该节回答的问题或给出的结论。目录本身要能让读者看懂论证路线。
-- 说清动作与结果，例如“将写入请求路由到队列，并在消费端做幂等校验”，少用“做了优化”这类模糊表述。
-- 指标应包含基线、目标、测量方法和适用范围。缺少数据时标记“待测”，不借用源文档中的演示数字。
-- 强调关键结论、约束、风险和读者行动。引用或提示块只用于真正需要停下来注意的信息。
-- 类比只帮助入门，紧接着给出精确的技术对应关系和类比不成立的边界。
+## Use the right visual density
 
-## 图表选择与绘制
+- **Flowchart:** Show only business or interface decisions that change the result. Distinguish the happy path from one or two decisive exceptions. Do not diagram routine actions such as “open page → edit → save” unless those actions are the design problem.
+- **Mind map:** Show a true hierarchy or grouping. If two dimensions interact, nest one under the other or show a two-step selection; do not put two independent branches beside each other and leave the combination unexplained.
+- **Component diagram:** Show the few ownership boundaries that matter, such as one state owner and the editors that receive data. Move field descriptions and routine responsibilities to the list below.
+- **Sequence diagram:** Use only when ordering, asynchronous updates, or stale data are central to the design.
+- **Table:** Reserve for exact comparisons or fields that genuinely need row-and-column alignment.
 
-| 要表达的信息 | 合适的形式 | 至少标明 |
-| --- | --- | --- |
-| 步骤、分支和状态变化 | 流程图 | 起点、终点、关键判断、失败路径 |
-| 层级、模块职责、依赖 | 架构图或模块图 | 系统边界、组件名称、连接含义 |
-| 请求和事件的先后 | 时序图 | 参与方、方向、同步或异步、超时与异常 |
-| 多方案取舍 | 对比表 | 同一组评价维度、证据或假设 |
-| 分类和并列主题 | 简明树状图或目录 | 分类口径、层级关系 |
+A visual should usually carry one sentence's worth of meaning. Use a short title or claim above it, then a brief list below for conditions, failure behavior, and codebase implications. If many tiny labels are needed, split the visual or replace it with a list.
 
-图表按业务或技术层次分组；同类元素用一致的形状与颜色；优先保持从左到右或从上到下的单一阅读方向。避免一张图塞进所有细节。复杂图可拆成总览和局部图。颜色、线框、间距和比例服务于关系表达，不用于装饰。
+Before finalizing a flowchart, follow each branch to its endpoint. A shared next step must be visibly shared by every applicable branch. If that convergence would make the graphic busy, stop the diagram at the branch outcomes and explain the next step in its caption. For a single-state-owner design, a compact “editors → shared draft → save” relationship is usually clearer than a large component inventory.
 
-## 与技术方案相关的补充
+For architecture-style SVG, draw connectors before opaque nodes so lines do not show through boxes. Leave enough space for arrows and labels; put any legend outside group boundaries. Use the article's color tokens and readable text sizes. Do not import a separate diagram skill's entire page theme or export controls into a design document.
 
-原文的绩效书写部分强调“工作—手段—指标”，这里仅转化为“设计动作—机制—验证指标”的表达方法。绩效案例、具体项目名和演示数字不属于通用方案内容。
+## Give information a visible priority
+
+Background needs one emphasized problem and one emphasized target. Use bold plus a solid, full-height light highlight with small inline padding behind the important phrase, not a half-height marker or blanket highlight across the paragraph. The requirement link is a quiet line below.
+
+Benefits need rank. State the primary benefit in large, high-contrast text; let secondary benefits support it. Do not give three claims identical pale boxes and expect the reader to identify the point.
+
+The same principle applies to component design: one prominent statement of the core ownership rule, a minimal diagram if useful, then concise bullets explaining behavior. A component name alone is not a design explanation.
+
+Color and emoji can mark “confirmed,” “proposed,” or “pending,” but also write those words. Keep contrast high enough to read without color. Major headings should stand on spacing and typography, without horizontal rules.
+
+Give the article a centered, roomy width; keep paragraphs, code, and small diagrams narrower so they stay easy to read. Keep a collapsible hierarchical contents control outside the article's layout column. Check the expanded panel at common large-screen widths, not just the closed toggle. Test its focus state and the 375 px reading layout. This applies useful UI design guidance (contrast, hierarchy, responsive navigation) without making the document depend on an installed UI skill.
+
+## Code belongs to the argument
+
+Choose the smallest executable idea that proves the design: for example, a three-state override and its fallback branch. Highlight syntax, mark proposal code as illustrative, and explain the consequence in one sentence. Avoid a code block that simply enumerates every channel, field, and type already visible elsewhere.
+
+For HTML output, prefer self-contained syntax styles or a locally bundled highlighter. If an external highlighter is used, pin it, disclose the dependency, and ensure the plain code remains readable offline. Always escape code before embedding it in HTML.
+
+When only an admin frontend repository is available for a feature that also changes a mobile client, put the mobile client's confirmed contract points near API integration and label them for verification in the mobile repository. Avoid silently presenting an admin-only plan as the entire client rollout.
+
+## Final scan
+
+Read only the title, top-level headings, subsection headings, diagrams, and emphasized phrases. They should tell a coherent, feature-specific story. Then read the supporting lists to check that each adds precision rather than repeating the graphic. Remove generic process narration, ornamental visuals, and unsupported gains.
